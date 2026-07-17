@@ -2,21 +2,23 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // Orden de ejecución importante para mantener las relaciones
+        $this->call([
+            TransporteSeeder::class,
+            ControlSeeder::class,
+            CargoSeeder::class,
+            UnidadAdministrativaSeeder::class,
+            AutorizacionSeeder::class,
+            // ConvenioSeeder::class, // Descomentar si se necesitan datos de convenios
+            // AutorizacionConvenioSeeder::class, // Descomentar si se necesitan datos
+            AutorizacionUnidadAdministrativaSeeder::class,
+            // Los seeders de solicitantes, registros y solicitudes se pueden agregar después
+        ]);
     }
 }
