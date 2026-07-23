@@ -9,9 +9,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('solicitud', function (Blueprint $table) {
-            $table->integer('solicitud_id')->primary()->comment('Clave primaria de la tabla');
-            $table->integer('solicitante_id')->comment('Id del solicitante');
-            $table->integer('registro_id')->comment('Id del registro');
+            $table->increments('solicitud_id')->comment('Clave primaria de la tabla');
+            $table->unsignedInteger('solicitante_id')->comment('Id del solicitante');
+            $table->unsignedInteger('registro_id')->comment('Id del registro');
             $table->string('solicitud_folio', 255)->unique()->comment('Folio de la solicitud');
             $table->longText('solicitud_mail_asunto')->comment('Asunto del correo enviado');
             $table->longText('solicitud_mail_cuerpo')->comment('Cuerpo del correo enviado');

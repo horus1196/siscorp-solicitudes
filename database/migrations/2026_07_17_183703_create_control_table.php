@@ -9,8 +9,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('control', function (Blueprint $table) {
-            $table->integer('control_id')->primary()->comment('Clave primaria de la tabla');
-            $table->integer('transporte_id')->comment('Id del tipo de transporte');
+            $table->increments('control_id')->comment('Clave primaria de la tabla');
+            $table->unsignedInteger('transporte_id')->comment('Id del tipo de transporte');
             $table->string('control_nombre', 50)->default('')->comment('Nombre del tipo de vehículo');
             $table->timestamp('registro_creacion')->useCurrent()->comment('Fecha y hora de creación del registro');
             $table->char('registro_estatus', 1)->default('A')->comment('Estatus del registro (A: activo o B: baja)');

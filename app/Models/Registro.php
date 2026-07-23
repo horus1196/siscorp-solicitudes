@@ -9,10 +9,10 @@ class Registro extends Model
     protected $table = 'registro';
     protected $primaryKey = 'registro_id';
     public $timestamps = false;
-    public $incrementing = false;
+    public $incrementing = true;
 
     protected $fillable = [
-        'registro_id',
+        //'registro_id',
         'registro_oficio',
         'registro_oficio_fecha',
         'registro_nombre',

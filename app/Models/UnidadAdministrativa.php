@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Database\Eloquent\Model;
 
 class UnidadAdministrativa extends Model
@@ -9,10 +11,10 @@ class UnidadAdministrativa extends Model
     protected $table = 'unidad_administrativa';
     protected $primaryKey = 'unidad_administrativa_id';
     public $timestamps = false;
-    public $incrementing = false;
+    public $incrementing = true;
 
     protected $fillable = [
-        'unidad_administrativa_id',
+        //'unidad_administrativa_id',
         'unidad_administrativa_nombre',
         'unidad_administrativa_alias',
         'registro_estatus'

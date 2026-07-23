@@ -40,6 +40,11 @@ class UnidadAdministrativaSeeder extends Seeder
                 'unidad_administrativa_nombre' => 'DIRECCIÓN DE OPERACIÓN Y LICENCIAS DE TRANSPORTE DE RUTA Y ESPECIALIZADO',
                 'unidad_administrativa_alias' => 'DOLTRE',
             ],
+            [
+                'unidad_administrativa_id' => 7,
+                'unidad_administrativa_nombre' => 'OTRO (CONVENIOS)',
+                'unidad_administrativa_alias' => 'OTRO',
+            ],
         ];
 
         foreach ($unidades as $unidad) {

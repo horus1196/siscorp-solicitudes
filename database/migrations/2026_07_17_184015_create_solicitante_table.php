@@ -9,15 +9,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('solicitante', function (Blueprint $table) {
-            $table->integer('solicitante_id')->primary()->comment('Clave primaria de la tabla');
+            $table->increments('solicitante_id')->comment('Clave primaria de la tabla');
             $table->string('solicitante_nombre', 50)->comment('Nombre(s) del solicitante');
             $table->string('solicitante_apellido_paterno', 50)->comment('Apellido paterno del solicitante');
             $table->string('solicitante_apellido_materno', 50)->nullable()->comment('Apellido materno del solicitante');
             $table->string('solicitante_curp', 18)->comment('CURP del solicitante');
+            $table->date('solicitante_fecha')->comment('Fecha del solicitante');
             $table->string('solicitante_ip', 255)->comment('Dirección IP');
-            $table->integer('unidad_administrativa_id')->comment('Id de la unidad administrativa');
-            $table->integer('unidad_administrativa_cargo_id')->comment('Id del cargo del solicitante');
-            $table->integer('convenio_id')->nullable()->comment('Id de la dependencia gubernamental con convenio');
+            $table->unsignedInteger('unidad_administrativa_id')->comment('Id de la unidad administrativa');
+            $table->unsignedInteger('unidad_administrativa_cargo_id')->nullable()->comment('Id del cargo del solicitante');
+            $table->unsignedInteger('convenio_id')->nullable()->comment('Id de la dependencia gubernamental con convenio');
             $table->string('solicitante_telefono', 10)->comment('Teléfono del solicitante');
             $table->string('solicitante_email', 255)->comment('Email del solicitante');
             $table->timestamp('registro_creacion')->useCurrent()->comment('Fecha y hora de creación del registro');

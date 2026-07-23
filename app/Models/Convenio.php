@@ -9,10 +9,10 @@ class Convenio extends Model
     protected $table = 'convenio';
     protected $primaryKey = 'convenio_id';
     public $timestamps = false;
-    public $incrementing = false;
+    public $incrementing = true;
 
     protected $fillable = [
-        'convenio_id',
+        //'convenio_id',
         'convenio_dependencia',
         'convenio_puesto',
         'registro_estatus'

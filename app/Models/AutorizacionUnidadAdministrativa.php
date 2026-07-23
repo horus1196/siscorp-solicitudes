@@ -9,10 +9,10 @@ class AutorizacionUnidadAdministrativa extends Model
     protected $table = 'autorizacion_unidad_administrativa';
     protected $primaryKey = 'autorizacion_unidad_administrativa_id';
     public $timestamps = false;
-    public $incrementing = false;
+    public $incrementing = true;
 
     protected $fillable = [
-        'autorizacion_unidad_administrativa_id',
+        //'autorizacion_unidad_administrativa_id',
         'unidad_administrativa_id',
         'autorizacion_id',
         'registro_estatus'

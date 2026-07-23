@@ -1,0 +1,27 @@
+1. Clonar el proyecto de github y dentro de él ejecutar composer install
+
+2. Conectar con la bd modificando el archivo .env ubicado en la raíz del proyecto
+
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3307
+    DB_DATABASE=siscorp_solicitudes
+    DB_USERNAME=root
+    DB_PASSWORD=
+
+3. Crear las tablas de la base de datos mediante php artisan make:migration create_nombreTabla_table
+
+4. Ejecutar php artisan migrate despúes de crear todas las migraciones
+
+5. Crear los seeder mediante php artisan make:seeder NombreSeeder
+
+6. Ejecutar la inserción en la tablas de la siguiente forma:
+
+    1. ok registro 
+    2. ok convenio (solo si los campos son no vacios)
+    3. ok solicitante
+    4. ok control_solicitante
+    5. ok autorizacion_solicitante
+    6. ok solicitud
+
+php artisan migrate:fresh --seed

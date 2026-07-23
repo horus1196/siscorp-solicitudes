@@ -9,10 +9,10 @@ class Transporte extends Model
     protected $table = 'transporte';
     protected $primaryKey = 'transporte_id';
     public $timestamps = false;
-    public $incrementing = false;
+    public $incrementing = true;
 
     protected $fillable = [
-        'transporte_id',
+        //'transporte_id',
         'transporte_nombre',
         'registro_estatus'
     ];
