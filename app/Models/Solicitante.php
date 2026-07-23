@@ -9,14 +9,15 @@ class Solicitante extends Model
     protected $table = 'solicitante';
     protected $primaryKey = 'solicitante_id';
     public $timestamps = false;
-    public $incrementing = false;
+    public $incrementing = true;
 
     protected $fillable = [
-        'solicitante_id',
+        //'solicitante_id',
         'solicitante_nombre',
         'solicitante_apellido_paterno',
         'solicitante_apellido_materno',
         'solicitante_curp',
+        'solicitante_fecha',
         'solicitante_ip',
         'unidad_administrativa_id',
         'unidad_administrativa_cargo_id',
