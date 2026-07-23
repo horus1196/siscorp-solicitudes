@@ -9,10 +9,10 @@ class Cargo extends Model
     protected $table = 'cargo';
     protected $primaryKey = 'cargo_id';
     public $timestamps = false;
-    public $incrementing = false;
+    public $incrementing = true;
 
     protected $fillable = [
-        'cargo_id',
+        //'cargo_id',
         'cargo_nombre',
         'registro_estatus'
     ];
