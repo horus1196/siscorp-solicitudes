@@ -458,6 +458,28 @@
         .form-select:required:invalid {
             border-left-color: #9d2148;
         }
+
+        /* Forzar vertical en Bootstrap */
+        .opciones {
+            display: flex;
+            flex-direction: column !important;
+        }
+
+        .opciones .form-check {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            padding: 5px 0 !important;
+        }
+
+        .opciones .form-check-input {
+            margin: 0 !important;
+            flex-shrink: 0 !important;
+        }
+
+        .opciones .form-check-label {
+            margin: 0 !important;
+        }
     </style>
 </head>
 
