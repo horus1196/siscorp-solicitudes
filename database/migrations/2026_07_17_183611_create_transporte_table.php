@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transporte', function (Blueprint $table) {
-            $table->integer('transporte_id')->primary()->comment('Clave primaria de la tabla');
+            $table->increments('transporte_id')->comment('Clave primaria de la tabla');
             $table->string('transporte_nombre', 50)->comment('Nombre del tipo de transporte');
             $table->timestamp('registro_creacion')->useCurrent()->comment('Fecha y hora de creación del registro');
             $table->char('registro_estatus', 1)->default('A')->comment('Estatus del registro (A: activo o B: baja)');
