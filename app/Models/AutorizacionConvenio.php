@@ -9,10 +9,10 @@ class AutorizacionConvenio extends Model
     protected $table = 'autorizacion_convenio';
     protected $primaryKey = 'autorizacion_convenio_id';
     public $timestamps = false;
-    public $incrementing = false;
+    public $incrementing = true;
 
     protected $fillable = [
-        'autorizacion_convenio_id',
+        //'autorizacion_convenio_id',
         'convenio_id',
         'autorizacion_id',
         'registro_estatus'
