@@ -9,10 +9,10 @@ class ControlSolicitante extends Model
     protected $table = 'control_solicitante';
     protected $primaryKey = 'control_solicitante_id';
     public $timestamps = false;
-    public $incrementing = false;
+    public $incrementing = true;
 
     protected $fillable = [
-        'control_solicitante_id',
+        //'control_solicitante_id',
         'control_id',
         'solicitante_id',
         'registro_estatus'
