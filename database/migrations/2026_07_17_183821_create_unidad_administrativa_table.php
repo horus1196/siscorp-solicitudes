@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('unidad_administrativa', function (Blueprint $table) {
-            $table->integer('unidad_administrativa_id')->primary()->comment('Clave primaria de la tabla');
+            $table->increments('unidad_administrativa_id')->comment('Clave primaria de la tabla');
             $table->string('unidad_administrativa_nombre', 255)->comment('Nombre completo de la unidad administrativa');
             $table->string('unidad_administrativa_alias', 50)->comment('Nombre corto o acrónimo de la unidad administrativa');
             $table->timestamp('registro_creacion')->useCurrent()->comment('Fecha y hora de creación del registro');

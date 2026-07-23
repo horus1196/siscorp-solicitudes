@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('registro', function (Blueprint $table) {
-            $table->integer('registro_id')->primary()->comment('Clave primaria de la tabla');
+            $table->increments('registro_id')->comment('Clave primaria de la tabla');
             $table->string('registro_oficio', 255)->comment('Número de oficio que se usará para la solicitud');
             $table->date('registro_oficio_fecha')->comment('Fecha del oficio que se usará para la solicitud');
             $table->string('registro_nombre', 50)->comment('Nombre de la persona que realiza el registro');

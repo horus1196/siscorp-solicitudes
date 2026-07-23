@@ -9,9 +9,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('autorizacion_unidad_administrativa', function (Blueprint $table) {
-            $table->integer('autorizacion_unidad_administrativa_id')->primary()->comment('Clave primaria de la tabla');
-            $table->integer('unidad_administrativa_id')->comment('Id de la unidad administrativa');
-            $table->integer('autorizacion_id')->comment('Id de la autorización');
+            $table->increments('autorizacion_unidad_administrativa_id')->comment('Clave primaria de la tabla');
+            $table->unsignedInteger('unidad_administrativa_id')->comment('Id de la unidad administrativa');
+            $table->unsignedInteger('autorizacion_id')->comment('Id de la autorización');
             $table->timestamp('registro_creacion')->useCurrent()->comment('Fecha y hora de creación del registro');
             $table->char('registro_estatus', 1)->default('A')->comment('Estatus del registro (A: activo o B: baja)');
             
