@@ -9,10 +9,10 @@ class AutorizacionSolicitante extends Model
     protected $table = 'autorizacion_solicitante';
     protected $primaryKey = 'autorizacion_solicitante_id';
     public $timestamps = false;
-    public $incrementing = false;
+    public $incrementing = true;
 
     protected $fillable = [
-        'autorizacion_solicitante_id',
+        //'autorizacion_solicitante_id',
         'solicitante_id',
         'autorizacion_id',
         'registro_estatus'
