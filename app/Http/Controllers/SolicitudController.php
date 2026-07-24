@@ -11,6 +11,8 @@ use App\Models\Convenio;
 use App\Models\Solicitante;
 use App\Models\ControlSolicitante;
 use App\Models\AutorizacionSolicitante;
+use App\Models\Control;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class SolicitudController extends Controller
 {
@@ -115,7 +117,6 @@ class SolicitudController extends Controller
             });
 
             return response()->json($resultado, 200);
-
         } catch (\Exception $e) {
 
             \Log::error('Error al crear registro', [
@@ -131,9 +132,86 @@ class SolicitudController extends Controller
         }
     }
 
-    public function descargarSolicitud(){
+    public function descargarSolicitud(
+        int $solicitud_id
+    ) {
 
-        return view("solicitud/solicitud-pdf");
+        try {
 
+            ini_set('memory_limit', '2048M'); // 2 GB
+            ini_set('max_execution_time', 300);
+
+            $solicitante = Solicitante::getSolicitanteBySolicitudId($solicitud_id);
+
+            if (
+                count($solicitante) == 0
+            ) {
+
+                return response()->json([
+                    "error" => 1,
+                    "message" => "No hay datos del solictante para la solicitud $solicitud_id",
+                    "data" => null,
+                ], 200);
+            }
+
+            $controlSolicitante = ControlSolicitante::getControlSolicitanteBySolicitudId($solicitud_id);
+
+            if (
+                count($controlSolicitante) == 0
+            ) {
+
+                return response()->json([
+                    "error" => 1,
+                    "message" => "No hay controles vehiculares para la solicitud $solicitud_id",
+                    "data" => null,
+                ], 200);
+            }
+
+
+            $autorizacionSolicitante = AutorizacionSolicitante::getAutorizacionSolicitanteBySolicitudId($solicitud_id);
+
+            if (
+                count($autorizacionSolicitante) == 0
+            ) {
+
+                return response()->json([
+                    "error" => 1,
+                    "message" => "No hay autorizaciones para la solicitud $solicitud_id",
+                    "data" => null,
+                ], 200);
+            }
+
+            $solicitudData = [
+                "solicitante" => $solicitante[0],
+                "control_solicitante" => $controlSolicitante,
+                "autorizacion_solicitante" => $autorizacionSolicitante
+            ];
+
+            $pdf = Pdf::loadView('solicitud.solicitudPDF', $solicitudData);
+
+            return $pdf->stream('solicitud_' . $solicitud_id . '.pdf');
+            
+        } catch (\Exception $e) {
+
+            \Log::error('Error en activeRecords: ' . $e->getMessage(), [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return response()->json([
+                "error" => 1,
+                "message" => "Error al tratar de obtener las datos de la solicitud no. {$solicitud_id}",
+                "data" => null
+            ], 200);
+        }
+
+
+        /*return view(
+            "solicitud/solicitud-pdf",
+            [
+                "solicitud_id" => $solicitud_id
+            ]
+        );*/
     }
 }
