@@ -1640,7 +1640,9 @@
 
                             limpiarFormulario();
 
-                            window.location.href = '/solicitud/descargar';
+                            let pdfUrl = encodeURIComponent(response.data.solicitud_id);
+
+                            window.location.href = `/solicitud/descargar/${pdfUrl}`;
 
                         }
                     },
