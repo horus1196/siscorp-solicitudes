@@ -109,14 +109,23 @@ class SolicitudController extends Controller
 
                 $solicitud_validacion["data"]["solicitud"]["registro_id"] = $registro_id;
 
-                Solicitud::create(
+                $createSolicitud = Solicitud::create(
                     $solicitud_validacion["data"]["solicitud"]
                 );
+
+                $solicitud_validacion["data"]["solicitud"]["solicitud_uuid"] = $createSolicitud->solicitud_uuid;
 
                 return $solicitud_validacion;
             });
 
-            return response()->json($resultado, 200);
+            return response()->json(
+                [
+                    "error" => 0,
+                    "message" => null,
+                    "data" => [
+                        "solicitud_uuid" => $resultado["data"]["solicitud"]["solicitud_uuid"]
+                    ]
+                ], 200);
         } catch (\Exception $e) {
 
             \Log::error('Error al crear registro', [
@@ -133,13 +142,26 @@ class SolicitudController extends Controller
     }
 
     public function descargarSolicitud(
-        int $solicitud_id
+        string $solicitud_uuid
     ) {
 
         try {
 
-            ini_set('memory_limit', '2048M'); // 2 GB
-            ini_set('max_execution_time', 300);
+            $solicitud_id_get = Solicitud::select("solicitud_id")
+                ->where("solicitud_uuid", $solicitud_uuid)
+                ->where("registro_estatus", "A")
+                ->get()
+                ->toArray();
+
+            if(
+                count($solicitud_id_get) == 0
+            ){
+
+                abort(404, "Solicitud no encontrada");
+
+            }
+
+            $solicitud_id = $solicitud_id_get[0]["solicitud_id"];
 
             $solicitante = Solicitante::getSolicitanteBySolicitudId($solicitud_id);
 
@@ -147,11 +169,7 @@ class SolicitudController extends Controller
                 count($solicitante) == 0
             ) {
 
-                return response()->json([
-                    "error" => 1,
-                    "message" => "No hay datos del solictante para la solicitud $solicitud_id",
-                    "data" => null,
-                ], 200);
+                abort(404, "No hay datos del solicitante para la solicitud $solicitud_id");
             }
 
             $controlSolicitante = ControlSolicitante::getControlSolicitanteBySolicitudId($solicitud_id);
@@ -160,11 +178,7 @@ class SolicitudController extends Controller
                 count($controlSolicitante) == 0
             ) {
 
-                return response()->json([
-                    "error" => 1,
-                    "message" => "No hay controles vehiculares para la solicitud $solicitud_id",
-                    "data" => null,
-                ], 200);
+                abort(404, "No hay controles vehiculares para la solicitud $solicitud_id");
             }
 
 
@@ -174,23 +188,40 @@ class SolicitudController extends Controller
                 count($autorizacionSolicitante) == 0
             ) {
 
-                return response()->json([
-                    "error" => 1,
-                    "message" => "No hay autorizaciones para la solicitud $solicitud_id",
-                    "data" => null,
-                ], 200);
+                abort(404, "No hay autorizaciones para la solicitud $solicitud_id");
+            }
+
+            $solicitud = Solicitud::where("solicitud_id", $solicitud_id)
+                ->where("registro_estatus", "A")
+                ->get()
+                ->toArray();
+
+            if (
+                count($solicitud) == 0
+            ) {
+
+                abort(404, "No hay autorizaciones para la solicitud $solicitud_id");
             }
 
             $solicitudData = [
                 "solicitante" => $solicitante[0],
                 "control_solicitante" => $controlSolicitante,
-                "autorizacion_solicitante" => $autorizacionSolicitante
+                "autorizacion_solicitante" => $autorizacionSolicitante,
+                "solicitud" => $solicitud[0]
             ];
 
             $pdf = Pdf::loadView('solicitud.solicitudPDF', $solicitudData);
 
-            return $pdf->stream('solicitud_' . $solicitud_id . '.pdf');
-            
+            $pdf->setOptions([
+                'isRemoteEnabled' => true,
+                'defaultFont' => 'Roboto',
+                'isHtml5ParserEnabled' => true,
+                'isPhpEnabled' => true,
+            ]);
+
+            $pdf->setPaper('letter', 'portrait');
+
+            return $pdf->stream('solicitud_' . date('Ymd_His') . '.pdf');
         } catch (\Exception $e) {
 
             \Log::error('Error en activeRecords: ' . $e->getMessage(), [
@@ -199,19 +230,7 @@ class SolicitudController extends Controller
                 'trace' => $e->getTraceAsString()
             ]);
 
-            return response()->json([
-                "error" => 1,
-                "message" => "Error al tratar de obtener las datos de la solicitud no. {$solicitud_id}",
-                "data" => null
-            ], 200);
+            abort(404, "Error al tratar de obtener las datos de la solicitud no. {$solicitud_id}");
         }
-
-
-        /*return view(
-            "solicitud/solicitud-pdf",
-            [
-                "solicitud_id" => $solicitud_id
-            ]
-        );*/
     }
 }
