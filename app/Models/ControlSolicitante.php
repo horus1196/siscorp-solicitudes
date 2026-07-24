@@ -87,11 +87,39 @@ class ControlSolicitante extends Model
 
             $resultados = $statement->fetchAll(PDO::FETCH_ASSOC);
 
+            $resultadosByKey = [];
+
+            $resultadosKeys = [];
+
+            for(
+                $i = 0;
+                $i < count($resultados);
+                $i++
+            ){
+
+                $resultadosByKey[$resultados[$i]["transporte_nombre"]][] = $resultados[$i];
+
+                if(
+                    !in_array(
+                        $resultados[$i]["transporte_nombre"],
+                        $resultadosKeys
+                    )
+                ){
+
+                    $resultadosKeys[] = $resultados[$i]["transporte_nombre"];
+
+                }
+
+            }
+
             \Log::info('Consulta SolicitanteController ejecutada', [
                 'total_registros' => count($resultados)
             ]);
 
-            return $resultados;
+            return [
+                "controles" => $resultadosByKey,
+                "controles_headers" => $resultadosKeys
+            ];
         } catch (PDOException $e) {
 
             \Log::error('Error PDO en SolicitanteController', [
