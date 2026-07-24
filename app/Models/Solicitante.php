@@ -3,6 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use PDO;
+use PDOException;
+use Exception;
 
 class Solicitante extends Model
 {
@@ -72,5 +76,70 @@ class Solicitante extends Model
     public function scopeActive($query)
     {
         return $query->where('registro_estatus', self::ESTATUS_ACTIVO);
+    }
+
+    public static function getSolicitanteBySolicitudId(
+        int $solicitud_id
+    ) {
+        try {
+
+            $sql = "SELECT
+                TRIM(CONCAT(solicitante.solicitante_nombre, ' ', solicitante.solicitante_apellido_paterno, ' ', solicitante.solicitante_apellido_materno)) AS solicitante_nombre_completo,
+                solicitante.solicitante_curp,
+                DATE_FORMAT(solicitante.solicitante_fecha,'%d/%m/%Y') AS solicitante_fecha,
+                IF(ISNULL(convenio.convenio_dependencia) = 1, unidad_administrativa.unidad_administrativa_nombre, convenio.convenio_dependencia) AS unidad_administrativa_nombre,
+                IF(ISNULL(convenio.convenio_puesto) = 1,  cargo.cargo_nombre, convenio.convenio_puesto) AS cargo_nombre,
+                solicitante.solicitante_ip,
+                solicitante.solicitante_telefono,
+                solicitante.solicitante_email
+                FROM
+                solicitante
+                INNER JOIN unidad_administrativa ON unidad_administrativa.unidad_administrativa_id = solicitante.unidad_administrativa_id
+                LEFT JOIN convenio ON convenio.convenio_id = solicitante.convenio_id
+                LEFT JOIN cargo ON cargo.cargo_id = solicitante.unidad_administrativa_cargo_id
+                WHERE
+                solicitante.registro_estatus = 'A'
+                AND
+                solicitante.solicitante_id IN (SELECT
+                solicitud.solicitante_id
+                FROM
+                solicitud
+                WHERE
+                solicitud.solicitud_id = :solicitud_id)";
+
+            $pdo = DB::connection()->getPdo();
+
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $statement = $pdo->prepare($sql);
+
+            $statement->execute([
+                ':solicitud_id' => $solicitud_id
+            ]);
+
+            $resultados = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+            \Log::info('Consulta SolicitanteController ejecutada', [
+                'total_registros' => count($resultados)
+            ]);
+
+            return $resultados;
+        } catch (PDOException $e) {
+
+            \Log::error('Error PDO en SolicitanteController', [
+                'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'errorInfo' => $e->errorInfo ?? null
+            ]);
+
+            throw new Exception('Error en la consulta de datos del solicitante: ' . $e->getMessage());
+        } catch (Exception $e) {
+
+            \Log::error('Error en SolicitanteController', [
+                'message' => $e->getMessage()
+            ]);
+
+            throw $e;
+        }
     }
 }

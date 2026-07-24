@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('solicitud', function (Blueprint $table) {
             $table->increments('solicitud_id')->comment('Clave primaria de la tabla');
+            $table->uuid('solicitud_uuid')->unique()->comment('UUID único para la solicitud');
             $table->unsignedInteger('solicitante_id')->comment('Id del solicitante');
             $table->unsignedInteger('registro_id')->comment('Id del registro');
             $table->string('solicitud_folio', 255)->unique()->comment('Folio de la solicitud');

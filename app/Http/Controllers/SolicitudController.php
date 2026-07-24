@@ -11,6 +11,8 @@ use App\Models\Convenio;
 use App\Models\Solicitante;
 use App\Models\ControlSolicitante;
 use App\Models\AutorizacionSolicitante;
+use App\Models\Control;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class SolicitudController extends Controller
 {
@@ -107,15 +109,23 @@ class SolicitudController extends Controller
 
                 $solicitud_validacion["data"]["solicitud"]["registro_id"] = $registro_id;
 
-                Solicitud::create(
+                $createSolicitud = Solicitud::create(
                     $solicitud_validacion["data"]["solicitud"]
                 );
+
+                $solicitud_validacion["data"]["solicitud"]["solicitud_uuid"] = $createSolicitud->solicitud_uuid;
 
                 return $solicitud_validacion;
             });
 
-            return response()->json($resultado, 200);
-
+            return response()->json(
+                [
+                    "error" => 0,
+                    "message" => null,
+                    "data" => [
+                        "solicitud_uuid" => $resultado["data"]["solicitud"]["solicitud_uuid"]
+                    ]
+                ], 200);
         } catch (\Exception $e) {
 
             \Log::error('Error al crear registro', [
@@ -131,9 +141,96 @@ class SolicitudController extends Controller
         }
     }
 
-    public function descargarSolicitud(){
+    public function descargarSolicitud(
+        string $solicitud_uuid
+    ) {
 
-        return view("solicitud/solicitud-pdf");
+        try {
 
+            $solicitud_id_get = Solicitud::select("solicitud_id")
+                ->where("solicitud_uuid", $solicitud_uuid)
+                ->where("registro_estatus", "A")
+                ->get()
+                ->toArray();
+
+            if(
+                count($solicitud_id_get) == 0
+            ){
+
+                abort(404, "Solicitud no encontrada");
+
+            }
+
+            $solicitud_id = $solicitud_id_get[0]["solicitud_id"];
+
+            $solicitante = Solicitante::getSolicitanteBySolicitudId($solicitud_id);
+
+            if (
+                count($solicitante) == 0
+            ) {
+
+                abort(404, "No hay datos del solicitante para la solicitud $solicitud_id");
+            }
+
+            $controlSolicitante = ControlSolicitante::getControlSolicitanteBySolicitudId($solicitud_id);
+
+            if (
+                count($controlSolicitante) == 0
+            ) {
+
+                abort(404, "No hay controles vehiculares para la solicitud $solicitud_id");
+            }
+
+
+            $autorizacionSolicitante = AutorizacionSolicitante::getAutorizacionSolicitanteBySolicitudId($solicitud_id);
+
+            if (
+                count($autorizacionSolicitante) == 0
+            ) {
+
+                abort(404, "No hay autorizaciones para la solicitud $solicitud_id");
+            }
+
+            $solicitud = Solicitud::where("solicitud_id", $solicitud_id)
+                ->where("registro_estatus", "A")
+                ->get()
+                ->toArray();
+
+            if (
+                count($solicitud) == 0
+            ) {
+
+                abort(404, "No hay autorizaciones para la solicitud $solicitud_id");
+            }
+
+            $solicitudData = [
+                "solicitante" => $solicitante[0],
+                "control_solicitante" => $controlSolicitante,
+                "autorizacion_solicitante" => $autorizacionSolicitante,
+                "solicitud" => $solicitud[0]
+            ];
+
+            $pdf = Pdf::loadView('solicitud.solicitudPDF', $solicitudData);
+
+            $pdf->setOptions([
+                'isRemoteEnabled' => true,
+                'defaultFont' => 'Roboto',
+                'isHtml5ParserEnabled' => true,
+                'isPhpEnabled' => true,
+            ]);
+
+            $pdf->setPaper('letter', 'portrait');
+
+            return $pdf->stream('solicitud_' . date('Ymd_His') . '.pdf');
+        } catch (\Exception $e) {
+
+            \Log::error('Error en activeRecords: ' . $e->getMessage(), [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            abort(404, "Error al tratar de obtener las datos de la solicitud no. {$solicitud_id}");
+        }
     }
 }

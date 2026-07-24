@@ -85,6 +85,7 @@
             .navbar-nav {
                 padding: 10px 0;
             }
+
             .nav-link {
                 padding: 10px 16px !important;
                 font-size: 1rem;
@@ -458,6 +459,28 @@
         .form-select:required:invalid {
             border-left-color: #9d2148;
         }
+
+        /* Forzar vertical en Bootstrap */
+        .opciones {
+            display: flex;
+            flex-direction: column !important;
+        }
+
+        .opciones .form-check {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            padding: 5px 0 !important;
+        }
+
+        .opciones .form-check-input {
+            margin: 0 !important;
+            flex-shrink: 0 !important;
+        }
+
+        .opciones .form-check-label {
+            margin: 0 !important;
+        }
     </style>
 </head>
 
@@ -531,8 +554,8 @@
                         </label>
                         <input class="form-control registro input-text"
                             oninput="this.value = this.value.replace(/[^0-9A-Za-záéíóúÁÉÍÓÚñÑ\/\-\(\)\.\,\;\s\:]/g,'')"
-                            id="registro_oficio" type="text" placeholder="Ingresa número de oficio..." maxlength="255"
-                            autofocus required>
+                            id="registro_oficio" type="text" placeholder="Ingresa número de oficio..."
+                            maxlength="255" autofocus required>
                         <label for="registro_oficio" class="form-label count" id="count_registro_oficio"></label>
                         <label for="registro_oficio" class="form-label validation"
                             id="validation_registro_oficio"></label>
@@ -560,8 +583,9 @@
                             Nombre(s) <span class="required-star">*</span>
                         </label>
                         <input class="form-control registro input-text"
-                            oninput="this.value = this.value.replace(/[^A-Za-záéíóúÁÉÍÓÚñÑ\s\.]/g,'')" id="registro_nombre"
-                            type="text" placeholder="Ingresa nombre(s)..." maxlength="50" required>
+                            oninput="this.value = this.value.replace(/[^A-Za-záéíóúÁÉÍÓÚñÑ\s\.]/g,'')"
+                            id="registro_nombre" type="text" placeholder="Ingresa nombre(s)..." maxlength="50"
+                            required>
                         <label for="registro_nombre" class="form-label count" id="count_registro_nombre"></label>
                         <label for="registro_nombre" class="form-label validation"
                             id="validation_registro_nombre"></label>
@@ -575,8 +599,8 @@
                         </label>
                         <input class="form-control registro input-text"
                             oninput="this.value = this.value.replace(/[^A-Za-záéíóúÁÉÍÓÚñÑ\s\.]/g,'')"
-                            id="registro_apellido_paterno" type="text" placeholder="Ingresa apellido paterno(s)..."
-                            maxlength="50" required>
+                            id="registro_apellido_paterno" type="text"
+                            placeholder="Ingresa apellido paterno(s)..." maxlength="50" required>
                         <label for="registro_apellido_paterno" class="form-label count"
                             id="count_registro_apellido_paterno"></label>
                         <label for="registro_apellido_paterno" class="form-label validation"
@@ -634,7 +658,8 @@
                             oninput="this.value = this.value.replace(/[^A-Za-záéíóúÁÉÍÓÚñÑ\s\.]/g,'')"
                             id="solicitante_nombre" type="text" placeholder="Ingresa nombre(s)..." maxlength="50"
                             autofocus required>
-                        <label for="solicitante_nombre" class="form-label count" id="count_solicitante_nombre"></label>
+                        <label for="solicitante_nombre" class="form-label count"
+                            id="count_solicitante_nombre"></label>
                         <label for="solicitante_nombre" class="form-label validation"
                             id="validation_solicitante_nombre"></label>
                     </div>
@@ -647,8 +672,8 @@
                         </label>
                         <input class="form-control solicitante input-text"
                             oninput="this.value = this.value.replace(/[^A-Za-záéíóúÁÉÍÓÚñÑ\s\.]/g,'')"
-                            id="solicitante_apellido_paterno" type="text" placeholder="Ingresa apellido paterno(s)..."
-                            maxlength="50" required>
+                            id="solicitante_apellido_paterno" type="text"
+                            placeholder="Ingresa apellido paterno(s)..." maxlength="50" required>
                         <label for="solicitante_apellido_paterno" class="form-label count"
                             id="count_solicitante_apellido_paterno"></label>
                         <label for="solicitante_apellido_paterno" class="form-label validation"
@@ -663,8 +688,8 @@
                         </label>
                         <input class="form-control solicitante input-text"
                             oninput="this.value = this.value.replace(/[^A-Za-záéíóúÁÉÍÓÚñÑ\s\.]/g,'')"
-                            id="solicitante_apellido_materno" type="text" placeholder="Ingresa apellido materno..."
-                            maxlength="50">
+                            id="solicitante_apellido_materno" type="text"
+                            placeholder="Ingresa apellido materno..." maxlength="50">
                         <label for="solicitante_apellido_materno" class="form-label count"
                             id="count_solicitante_apellido_materno"></label>
                     </div>
@@ -737,8 +762,10 @@
                         </label>
                         <input class="form-control convenio input-text"
                             oninput="this.value = this.value.replace(/[^A-Za-záéíóúÁÉÍÓÚñÑ\s\.\-\,\;\/\(\)]/g,'')"
-                            id="convenio_dependencia" type="text" placeholder="Ingresa dependencia..." maxlength="300">
-                        <label for="convenio_dependencia" class="form-label count" id="count_convenio_dependencia"></label>
+                            id="convenio_dependencia" type="text" placeholder="Ingresa dependencia..."
+                            maxlength="300">
+                        <label for="convenio_dependencia" class="form-label count"
+                            id="count_convenio_dependencia"></label>
                         <label for="convenio_dependencia" class="form-label validation"
                             id="validation_convenio_dependencia"></label>
                     </div>
@@ -782,7 +809,8 @@
                         <input class="form-control solicitante input-text" id="solicitante_telefono"
                             oninput="this.value = this.value.replace(/[^0-9]/g,'')" type="text"
                             placeholder="Ingresa Whatsapp..." maxlength="10" required>
-                        <label for="solicitante_telefono" class="form-label count" id="count_solicitante_telefono"></label>
+                        <label for="solicitante_telefono" class="form-label count"
+                            id="count_solicitante_telefono"></label>
                         <label for="solicitante_telefono" class="form-label validation"
                             id="validation_solicitante_telefono"></label>
                     </div>
@@ -793,8 +821,8 @@
                             <i class="fas fa-envelope" style="color:#b28e5c; width:18px;"></i>
                             Correo electrónico <span class="required-star">*</span>
                         </label>
-                        <input class="form-control solicitante input-text email" id="solicitante_email" type="email"
-                            placeholder="Ingresa correo electrónico..." maxlength="255" required>
+                        <input class="form-control solicitante input-text email" id="solicitante_email"
+                            type="email" placeholder="Ingresa correo electrónico..." maxlength="255" required>
                         <label for="solicitante_email" class="form-label count" id="count_solicitante_email"></label>
                         <label for="solicitante_email" class="form-label validation"
                             id="validation_solicitante_email"></label>
@@ -834,7 +862,8 @@
 
         <!-- ==================== BOTONES ==================== -->
         <div class="section-card" style="border-left-color: #b28e5c; background: #faf9f7;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap:15px;">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap:15px;">
                 <div class="btn-group-custom">
                     <button type="button" class="btn-generate" id="btn-generar-solicitud">
                         <i class="fas fa-file-alt"></i> Generar solicitud
@@ -853,26 +882,21 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous">
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
     <!-- jQuery 3.7.1 (última versión estable) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js">
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <!--sweetalert-->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- 2. LUEGO jQuery UI -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css">
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js">
-    </script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <!-- Localización en español para México -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/i18n/datepicker-es.min.js">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/i18n/datepicker-es.min.js"></script>
 
     <!-- ===== TU JAVASCRIPT ORIGINAL - SIN MODIFICAR ===== -->
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
 
             $.datepicker.setDefaults($.datepicker.regional['es']);
 
@@ -939,7 +963,7 @@
                     /*data: {
                         remitente_codigo_postal: this.value
                     },*/
-                    success: function (response) {
+                    success: function(response) {
 
                         Swal.close();
 
@@ -959,7 +983,7 @@
 
                         if (parseInt(response.error) == 0) {
 
-                            $.each(response.data, function (index, item) {
+                            $.each(response.data, function(index, item) {
                                 $("#unidad_administrativa_id").append($('<option>', {
                                     value: item.value,
                                     text: item.text
@@ -968,7 +992,7 @@
 
                         }
                     },
-                    error: function (jqXHR, exception) {
+                    error: function(jqXHR, exception) {
 
                         Swal.close();
 
@@ -1054,7 +1078,7 @@
                     /*data: {
                         remitente_codigo_postal: this.value
                     },*/
-                    success: function (response) {
+                    success: function(response) {
 
                         Swal.close();
 
@@ -1074,7 +1098,7 @@
 
                         if (parseInt(response.error) == 0) {
 
-                            $.each(response.data, function (index, item) {
+                            $.each(response.data, function(index, item) {
                                 $("#unidad_administrativa_cargo_id").append($('<option>', {
                                     value: item.value,
                                     text: item.text
@@ -1083,7 +1107,7 @@
 
                         }
                     },
-                    error: function (jqXHR, exception) {
+                    error: function(jqXHR, exception) {
 
                         Swal.close();
 
@@ -1137,7 +1161,7 @@
 
             cargo();
 
-            $("#unidad_administrativa_id").on("change", function () {
+            $("#unidad_administrativa_id").on("change", function() {
 
                 $("#unidad_administrativa_cargo_id").prop('disabled', true);
 
@@ -1202,7 +1226,7 @@
                     /*data: {
                         remitente_codigo_postal: this.value
                     },*/
-                    success: function (response) {
+                    success: function(response) {
 
                         Swal.close();
 
@@ -1241,14 +1265,15 @@
 
                                 if ($("#" + response.data[j]["transporte_nombre"]).length > 0) {
 
-                                    $("#" + response.data[j]["transporte_nombre"] + " .opciones").append(
-                                        `<div class="form-check">
+                                    $("#" + response.data[j]["transporte_nombre"] + " .opciones")
+                                        .append(
+                                            `<div class="form-check">
                                             <input class="form-check-input control_solicitante" type="checkbox" value="${response.data[j]["control_id"]}" id="control_solicitante_${j}">
                                             <label class="form-check-label" for="control_solicitante_${j}">
                                                 ${response.data[j]["control_nombre"]}
                                             </label>
                                         </div>`
-                                    );
+                                        );
 
                                 }
 
@@ -1256,7 +1281,7 @@
 
                         }
                     },
-                    error: function (jqXHR, exception) {
+                    error: function(jqXHR, exception) {
 
                         Swal.close();
 
@@ -1333,7 +1358,7 @@
                     data: {
                         unidad_administrativa_id: unidadAdministrativaId
                     },
-                    success: function (response) {
+                    success: function(response) {
 
                         Swal.close();
 
@@ -1354,9 +1379,7 @@
                         if (parseInt(response.error) == 0) {
 
                             for (
-                                let i = 0;
-                                i < response.data.length;
-                                i++
+                                let i = 0; i < response.data.length; i++
                             ) {
 
                                 $("#div-autorizaciones").append(
@@ -1372,7 +1395,7 @@
 
                         }
                     },
-                    error: function (jqXHR, exception) {
+                    error: function(jqXHR, exception) {
 
                         Swal.close();
 
@@ -1424,17 +1447,20 @@
 
             }
 
-            $(document).on('input', '.input-text', function () {
+            $(document).on('input', '.input-text', function() {
 
-                $(`#count_${this.id}`).html(this.value.length > 0 ? this.value.length + "/" + this.maxLength : "");
+                $(`#count_${this.id}`).html(this.value.length > 0 ? this.value.length + "/" + this
+                    .maxLength : "");
 
             });
 
-            $("#btn-limpiar").on("click", function () {
+            $("#btn-limpiar").on("click", function() {
                 limpiarFormulario();
             });
 
-            function limpiarFormulario() {
+            function limpiarFormulario(
+                toFocus = true
+            ) {
 
                 $(".registro").val("");
 
@@ -1454,8 +1480,6 @@
 
                 $("#div-autorizaciones").html("Selecciona unidad administrativa para continuar...");
 
-                $(".registro")[0].focus();
-
                 $(".validation").html("");
 
                 $(".registro, .solicitante, .convenio").css('border', '');
@@ -1468,9 +1492,16 @@
 
                 controlTransporte();
 
+                if (
+                    toFocus
+                ) {
+                    $(".registro")[0].focus();
+
+                }
+
             }
 
-            $("#btn-generar-solicitud").on("click", function () {
+            $("#btn-generar-solicitud").on("click", function() {
 
                 let validarResultado = validar();
 
@@ -1494,7 +1525,7 @@
 
                 const registroInputsValues = {};
 
-                $(".registro").each(function () {
+                $(".registro").each(function() {
 
                     const id = $(this).attr('id');
 
@@ -1502,12 +1533,13 @@
 
                     const value = $(this).val();
 
-                    registroInputsValues[id] = typeInput == "email" ? value.toLowerCase() : value.toUpperCase();
+                    registroInputsValues[id] = typeInput == "email" ? value.toLowerCase() : value
+                        .toUpperCase();
                 });
 
                 const solicitanteInputsValues = {};
 
-                $(".solicitante").each(function () {
+                $(".solicitante").each(function() {
 
                     const id = $(this).attr('id');
 
@@ -1515,13 +1547,14 @@
 
                     const value = $(this).val();
 
-                    solicitanteInputsValues[id] = typeInput == "email" ? value.toLowerCase() : value.toUpperCase();
+                    solicitanteInputsValues[id] = typeInput == "email" ? value.toLowerCase() : value
+                        .toUpperCase();
                 });
 
 
                 const convenioInputsValues = {};
 
-                $(".convenio").each(function () {
+                $(".convenio").each(function() {
 
                     const id = $(this).attr('id');
 
@@ -1529,14 +1562,15 @@
 
                     const value = $(this).val();
 
-                    convenioInputsValues[id] = typeInput == "email" ? value.toLowerCase() : value.toUpperCase();
+                    convenioInputsValues[id] = typeInput == "email" ? value.toLowerCase() : value
+                        .toUpperCase();
                 });
 
-                const controlInputsValues = $(".control_solicitante:checked").map(function () {
+                const controlInputsValues = $(".control_solicitante:checked").map(function() {
                     return $(this).val();
                 }).get();
 
-                const autorizacionValores = $(".autorizacion_solicitante:checked").map(function () {
+                const autorizacionValores = $(".autorizacion_solicitante:checked").map(function() {
                     return $(this).val();
                 }).get();
 
@@ -1552,7 +1586,7 @@
                         control: controlInputsValues,
                         autorizacion: autorizacionValores
                     },
-                    success: function (response) {
+                    success: function(response) {
 
                         Swal.close();
 
@@ -1577,52 +1611,72 @@
                             if (response.data !== null) {
 
                                 const dataKeys = Object.keys(response.data);
-                                
-                                for(
-                                    let x = 0; 
-                                    x < dataKeys.length; 
-                                    x++
+
+                                for (
+                                    let x = 0; x < dataKeys.length; x++
                                 ) {
 
-                                    if(
-                                       dataKeys[x].match(/^[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+$/)
-                                    ){
+                                    if (
+                                        dataKeys[x].match(/^[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+$/)
+                                    ) {
                                         let inputId = dataKeys[x].split(".");
 
-                                        $(`#validation_${inputId[1]}`).html(response.data[dataKeys[x]].join(", "));
+                                        $(`#validation_${inputId[1]}`).html(response.data[
+                                            dataKeys[x]].join(", "));
 
                                     }
-                                    
+
                                 }
 
-                                if(
+                                if (
                                     dataKeys.includes("control")
-                                ){
+                                ) {
 
                                     $("#div-control").css('background-color', '#ff6666');
 
                                 }
 
-                                if(
+                                if (
                                     dataKeys.includes("autorizacion")
-                                ){
+                                ) {
 
                                     $("#div-autorizaciones").css('background-color', '#ff6666');
 
                                 }
-                            } 
+                            }
 
                         }
 
                         if (parseInt(response.error) == 0) {
 
-                            limpiarFormulario();
 
-                            window.location.href = '/solicitud/descargar';
+                            Swal.fire({
+                                icon: "success",
+                                title: "¡Solicitud registrada con éxito!",
+                                timerProgressBar: true,
+                                confirmButtonText: 'Expedir solicitud en PDF',
+                                confirmButtonColor: '#235B4E',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                showCloseButton: false,
+                            }).then((result) => {
+
+                                if (result.isConfirmed) {
+
+                                    limpiarFormulario(
+                                        false
+                                    );
+
+                                    window.location.href =
+                                        `/solicitud/descargar/${response.data.solicitud_uuid}`;
+
+                                }
+                            });
+
 
                         }
                     },
-                    error: function (jqXHR, exception) {
+                    error: function(jqXHR, exception) {
 
                         Swal.close();
 
@@ -1686,9 +1740,7 @@
                 let registroValidacion = true;
 
                 for (
-                    let k = 0;
-                    k < registro.length;
-                    k++
+                    let k = 0; k < registro.length; k++
                 ) {
 
                     registro[k].style.border = "";
@@ -1718,7 +1770,7 @@
 
                 }
 
-                const controlValores = $(".control_solicitante:checked").map(function () {
+                const controlValores = $(".control_solicitante:checked").map(function() {
                     return $(this).val();
                 }).get();
 
@@ -1733,7 +1785,7 @@
 
                 }
 
-                const autorizacionValores = $(".autorizacion_solicitante:checked").map(function () {
+                const autorizacionValores = $(".autorizacion_solicitante:checked").map(function() {
                     return $(this).val();
                 }).get();
 

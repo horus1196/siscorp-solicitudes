@@ -26,7 +26,7 @@ Route::controller(SolicitudController::class)->group(function () {
 
     Route::post('/solicitud/procesar', 'generarSolicitud')->name('solicitud.procesar');
 
-    Route::get("/solicitud/descargar","descargarSolicitud")->name("solicitud.descargar");
+    Route::get("/solicitud/descargar/{solicitudUuid}","descargarSolicitud")->name("solicitud.descargar");
 });
 
 Route::prefix('api')->group(function () {

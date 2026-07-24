@@ -24,4 +24,12 @@
     5. ok autorizacion_solicitante
     6. ok solicitud
 
-php artisan migrate:fresh --seed
+Si hay cambios en las migraciones ejecutar este comando: php artisan migrate:fresh --seed
+
+Levantar el servidor local: php artisan serve --host=10.5.95.23 --port=8080
+
+Instalar DomPDF: composer require barryvdh/laravel-dompdf
+
+Ver ramas remotas de un proyecto clonado de github: git branch -r
+
+Trabajar en una rama remota de un proyecto clonado de github: git switch -c feature-PDF-application-form origin/feature-PDF-application-form

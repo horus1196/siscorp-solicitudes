@@ -508,7 +508,7 @@
         <div id="solicitud-pdf-section" class="section-card solicitud-pdf-section">
             <div class="row">
                 <div class="col-md-12">
-                    Aquí se mostrará el pdf generado
+                    <p>ID de la solicitud: {{ $solicitud_id }}</p>
                 </div>
             </div>
         </div>

@@ -14,6 +14,7 @@ use ReturnTypeWillChange;
 use App\Models\UnidadAdministrativa;
 use App\Models\Autorizacion;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class Solicitud extends Model
 {
@@ -24,6 +25,7 @@ class Solicitud extends Model
 
     protected $fillable = [
         //'solicitud_id',
+        'solicitud_uuid',
         'solicitante_id',
         'registro_id',
         'solicitud_folio',
@@ -434,7 +436,7 @@ class Solicitud extends Model
                     "solicitud" => [
                         "solicitud_folio" => $solicitud_folio,
                         "solicitud_mail_asunto" => "Layout solicitud usuarios SISCORP",
-                        "solicitud_mail_cuerpo" => "Usted generó exitosamente el siguiente Número de FOLIO: {$solicitud_folio}"
+                        "solicitud_mail_cuerpo" => "Layout solicitud usuarios SISCORP<br>Usted generó exitosamente el siguiente Número de FOLIO: {$solicitud_folio}<br><b>Nota Informativa:</b> La generación de este folio y formato impreso constituye un registro de solicitud de trámite interno y no representa la activación inmediata de la cuenta ni una obligación definitiva de otorgamiento del servicio por parte de la dependencia emisora hasta cumplir con la validación correspondiente."
                     ]
                 ]
             ];
@@ -451,5 +453,16 @@ class Solicitud extends Model
                 "data" => null
             ];
         }
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->solicitud_uuid)) {
+                $model->solicitud_uuid = (string) Str::uuid();
+            }
+        });
     }
 }
