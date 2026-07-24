@@ -25,3 +25,7 @@
     6. ok solicitud
 
 php artisan migrate:fresh --seed
+
+php artisan serve --host=10.5.95.23 --port=8080
+
+composer require barryvdh/laravel-dompdf
