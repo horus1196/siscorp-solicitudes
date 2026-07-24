@@ -84,15 +84,11 @@ class Solicitante extends Model
         try {
 
             $sql = "SELECT
-                solicitante.solicitante_nombre,
-                solicitante.solicitante_apellido_paterno,
-                solicitante.solicitante_apellido_materno,
+                TRIM(CONCAT(solicitante.solicitante_nombre, ' ', solicitante.solicitante_apellido_paterno, ' ', solicitante.solicitante_apellido_materno)) AS solicitante_nombre_completo,
                 solicitante.solicitante_curp,
                 DATE_FORMAT(solicitante.solicitante_fecha,'%d/%m/%Y') AS solicitante_fecha,
-                unidad_administrativa.unidad_administrativa_nombre,
-                cargo.cargo_nombre,
-                convenio.convenio_dependencia,
-                convenio.convenio_puesto,
+                IF(ISNULL(convenio.convenio_dependencia) = 1, unidad_administrativa.unidad_administrativa_nombre, convenio.convenio_dependencia) AS unidad_administrativa_nombre,
+                IF(ISNULL(convenio.convenio_puesto) = 1,  cargo.cargo_nombre, convenio.convenio_puesto) AS cargo_nombre,
                 solicitante.solicitante_ip,
                 solicitante.solicitante_telefono,
                 solicitante.solicitante_email
